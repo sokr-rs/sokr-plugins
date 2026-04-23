@@ -19,25 +19,25 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
 ## Phase 0 — Workspace Setup
 > Scaffold the repo. Nothing runs yet.
 
-- [ ] 🔴 Create `sokr-rs/sokr-plugins` GitHub repo
-- [ ] 🔴 Initialise Cargo workspace
-  - [ ] Root `Cargo.toml` with `[workspace]` members
-  - [ ] `resolver = "2"`
-  - [ ] `[workspace.dependencies]` — pin `sokr = "0.2"` when available
-  - [ ] `[workspace.lints]` — shared lint config
-  - [ ] `[profile.dev] panic = "abort"`
-  - [ ] `[profile.release] panic = "abort"`
-- [ ] 🔴 Move from `sokr-rs/sokr`:
-  - [ ] `crates/sokr-cpu/` → this repo
-  - [ ] `crates/sokr-dispatch-first/` → this repo
-- [ ] 🔴 LICENSE-MIT, LICENSE-APACHE, README, ARCHITECTURE, TODO
-- [ ] 🔴 `.github/workflows/ci.yml`
-  - [ ] `cargo check --workspace`
-  - [ ] `cargo test --workspace`
-  - [ ] `cargo clippy -- -D warnings`
-  - [ ] `cargo fmt --check`
-- [ ] 🔴 `.pre-commit-config.yaml` — fmt, check, clippy
-- [ ] 🟡 Dependabot — weekly cargo and github-actions updates
+- [x] 🔴 Create `sokr-rs/sokr-plugins` GitHub repo
+- [x] 🔴 Initialise Cargo workspace
+  - [x] Root `Cargo.toml` with `[workspace]` members
+  - [x] `resolver = "2"`
+  - [x] `[workspace.dependencies]` — pin `sokr = "0.2"` when available
+  - [x] `[workspace.lints]` — shared lint config
+  - [x] `[profile.dev] panic = "abort"`
+  - [x] `[profile.release] panic = "abort"`
+- [x] 🔴 Move from `sokr-rs/sokr`:
+  - [x] `crates/sokr-cpu/` → this repo
+  - [x] `crates/sokr-dispatch-first/` → this repo
+- [x] 🔴 LICENSE-MIT, LICENSE-APACHE, README, ARCHITECTURE, TODO
+- [x] 🔴 `.github/workflows/ci.yml`
+  - [x] `cargo check --workspace`
+  - [x] `cargo test --workspace`
+  - [x] `cargo clippy -- -D warnings`
+  - [x] `cargo fmt --check`
+- [x] 🔴 `.pre-commit-config.yaml` — fmt, check, clippy
+- [x] 🟡 Dependabot — weekly cargo and github-actions updates
 
 ---
 

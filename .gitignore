@@ -1,0 +1,49 @@
+# Rust
+/target/
+**/*.rs.bk
+**/*.rs.orig
+*.pdb
+
+# Cargo
+Cargo.lock
+.cargo/
+
+# IDE
+.vscode/
+.idea/
+.windsurf/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+**/*.rlib
+**/*.dylib
+**/*.so
+**/*.dll
+**/*.exe
+
+# Coverage
+*.profraw
+*.profdata
+*.lcov
+tarpaulin-report.html
+coverage/
+
+# Language bindings
+__pycache__/
+*.egg-info/
+node_modules/
+dist/
+
+# Misc
+*.log
+.env
+.env.local
+*.tmp
+*.bak
+*.orig

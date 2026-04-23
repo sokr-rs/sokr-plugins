@@ -1,0 +1,23 @@
+[workspace]
+members = [
+    "crates/sokr-cpu",
+    "crates/sokr-dispatch-first",
+]
+resolver = "2"
+
+[workspace.dependencies]
+# Pin to compatible sokr core version.
+# sokr = "0.2"
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+
+[workspace.lints.clippy]
+all = "deny"
+pedantic = "deny"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
