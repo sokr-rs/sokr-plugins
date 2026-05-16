@@ -17,6 +17,7 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
 ---
 
 ## Phase 0 — Workspace Setup
+
 > Scaffold the repo. Nothing runs yet.
 
 - [x] 🔴 Create `sokr-rs/sokr-plugins` GitHub repo
@@ -42,15 +43,18 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
 ---
 
 ## Phase 1 — CPU Substrate + First Dispatch Policy `v0.1.0`
+
 > Proves the core contract end-to-end. No GPU required.
 
 ### sokr-cpu
-- [ ] 🔴 Scaffold `crates/sokr-cpu/`
-  - [ ] `Cargo.toml` — `sokr` dependency, `crate-type = ["cdylib", "rlib"]`
-  - [ ] `src/lib.rs` — `SokrSubstratePlugin` static instance
-  - [ ] `src/capability.rs` — always returns `Ok`
-  - [ ] `src/dispatch.rs` — synchronous CPU execution
-  - [ ] `src/completion.rs` — immediate `Complete`
+
+- [x] 🔴 Scaffold `crates/sokr-cpu/`
+  - [x] `Cargo.toml` — `sokr` dependency, `crate-type = ["cdylib", "rlib"]`
+  - [x] `src/lib.rs` — complete plugin with:
+    - [x] `SokrSubstratePlugin` static instance
+    - [x] `capability` handler — returns `Ok`
+    - [x] `dispatch` handler — synchronous execution
+    - [x] `completion` handler — immediate `Ok`
 - [ ] 🔴 Implement `capability_fn`
   - [ ] Always return `SokrResult::Ok` — CPU accepts any computation
   - [ ] Set `estimated_latency_ns = 0`
@@ -79,6 +83,7 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
   - [ ] Deregister → assert `Ok`
 
 ### sokr-dispatch-first
+
 - [ ] 🔴 Scaffold `crates/sokr-dispatch-first/`
   - [ ] `Cargo.toml` — `sokr` dependency
   - [ ] `src/lib.rs` — dispatch policy implementation
@@ -91,6 +96,7 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
   - [ ] Unit test: zero substrates — returns `NoCapableSubstrate`
 
 ### Benchmarks (Phase 1)
+
 - [ ] 🟡 `benches/cpu_roundtrip.rs`
   - [ ] Measure: register → capability → dispatch → completion
   - [ ] Record baseline in `benches/RESULTS.md`
@@ -98,9 +104,11 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
 ---
 
 ## Phase 2 — First Real GPU Substrate `v0.2.0`
+
 > SOKR runs real GPU workloads. The plugin model is proven on hardware.
 
 ### sokr-spirv (IR Plugin)
+
 - [ ] 🔴 Scaffold `crates/sokr-spirv/`
   - [ ] `Cargo.toml` — `sokr`, `spirv-tools`
   - [ ] `src/lib.rs`, `src/validate.rs`, `src/reflect.rs`
@@ -118,6 +126,7 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
   - [ ] Unit test: reflection matches known shader metadata
 
 ### sokr-vulkan (Substrate Plugin)
+
 - [ ] 🔴 Scaffold `crates/sokr-vulkan/`
   - [ ] `Cargo.toml` — `sokr`, `ash`, `gpu-allocator`
   - [ ] `src/lib.rs`, `src/device.rs`, `src/pipeline.rs`
@@ -149,6 +158,7 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
   - [ ] Benchmark: cache hit vs miss latency
 
 ### Benchmarks (Phase 2)
+
 - [ ] 🔴 CPU vs Vulkan baseline
   - [ ] Array addition — 1M elements
   - [ ] Matrix multiply — 512×512
@@ -159,9 +169,11 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
 ---
 
 ## Phase 3 — Ecosystem `v0.3.0`
+
 > CUDA, Metal, Python, WebGPU, performance dispatch.
 
 ### sokr-cuda
+
 - [ ] 🟡 `sokr-ptx` IR plugin — validate PTX magic string `.version`
 - [ ] 🟡 CUDA substrate via `cust`
   - [ ] `cuDeviceGetCount` enumeration
@@ -170,23 +182,27 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
   - [ ] Unit test: PTX vector addition on CUDA device
 
 ### sokr-metal
+
 - [ ] 🟡 macOS/iOS only (`cfg(target_os = "macos")`)
   - [ ] `MTLComputeCommandEncoder` dispatch
   - [ ] Apple Silicon unified memory path
   - [ ] Unit test: Metal compute on Apple Silicon
 
 ### sokr-python
+
 - [ ] 🟡 PyO3 bindings
   - [ ] `ComputeContext`, `Kernel`, `CompletionHandle` Python classes
   - [ ] `maturin` build + PyPI publish pipeline
 
 ### sokr-webgpu
+
 - [ ] 🟡 `wgpu` substrate — Vulkan/Metal/DX12/WebGPU backend
   - [ ] WASM compilation target
   - [ ] `wasm-bindgen` JavaScript API
   - [ ] Publish as `@sokr/webgpu` on npm
 
 ### sokr-dispatch-perf
+
 - [ ] 🟡 Per-substrate latency profiling
   - [ ] Fixed-size ring buffer — no heap allocation
   - [ ] Profile persistence to flat binary file
@@ -195,9 +211,11 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
 ---
 
 ## Phase 4 — Future Substrates
+
 > QPU, Neuromorphic, Photonic. The horizon.
 
 ### sokr-qpu
+
 - [ ] 🟢 `sokr-openqasm` IR plugin — OpenQASM 3 validation
 - [ ] 🟢 IBM Quantum backend via Qiskit Runtime REST API
   - [ ] Capability: qubit count, gate set, T1/T2
@@ -205,17 +223,20 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
   - [ ] Completion: poll job status endpoint
 
 ### sokr-neuro
+
 - [ ] 🟢 Spike graph IR definition and validator
 - [ ] 🟢 Intel Loihi via LAVA framework bridge
   - [ ] Completion: convergence signal
   - [ ] Streaming partial results before convergence
 
 ### sokr-photon
+
 - [ ] 🟢 Optical circuit IR definition and validator
 - [ ] 🟢 Lightmatter backend (pending public SDK)
   - [ ] Stub capability returns `CapabilityDenied` until SDK ships
 
 ### sokr-ir (Sovereign IR)
+
 - [ ] 🟢 Substrate-agnostic computation graph specification
 - [ ] 🟢 Compilers: SOKR-IR → SPIR-V, PTX, OpenQASM 3, spike graph
 
@@ -231,4 +252,4 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
 
 ---
 
-*Copyright 2026 The SOKR Project — MIT OR Apache-2.0*
+_Copyright 2026 The SOKR Project — MIT OR Apache-2.0_

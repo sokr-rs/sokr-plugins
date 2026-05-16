@@ -7,7 +7,7 @@ resolver = "2"
 
 [workspace.dependencies]
 # Pin to compatible sokr core version.
-# sokr = "0.2"
+sokr = "0.1"
 
 [workspace.lints.rust]
 unsafe_code = "deny"
