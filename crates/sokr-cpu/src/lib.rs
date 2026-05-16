@@ -4,19 +4,9 @@
 #![no_std]
 
 use sokr::{
-    SokrSubstratePlugin,
-    SokrVersion,
-    SokrResult,
-    SokrCapabilityFn,
-    SokrDispatchFn,
-    SokrCompletionFn,
-    SokrDestroyFn,
-    SokrCapabilityQuery,
-    SokrCapabilityResponse,
-    SokrDispatchRequest,
-    SokrDispatchResponse,
-    SokrCompletionQuery,
-    SokrCompletionSignal,
+    SokrCapabilityFn, SokrCapabilityQuery, SokrCapabilityResponse, SokrCompletionFn,
+    SokrCompletionQuery, SokrCompletionSignal, SokrDestroyFn, SokrDispatchFn, SokrDispatchRequest,
+    SokrDispatchResponse, SokrResult, SokrSubstratePlugin, SokrVersion,
 };
 
 extern "C" fn capability(
