@@ -58,8 +58,9 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
 - [x] 🔴 Implement `capability_fn`
   - [x] Always return `SokrResult::Ok` — CPU accepts any computation
   - [x] Set `estimated_latency_ns = 0`
-  - [x] Unit test: any query returns capable
-  - [x] Unit test: null query pointer returns `InvalidInput`
+  - [x] Functional test: any query returns capable (`cargo run --example test_capability`)
+  - [x] Functional test: null query pointer returns `InvalidInput` (same)
+  - [x] Integration test: `tests/sokr_cpu_capability.rs` (runnable with `cargo test` if sokr is made testable)
 - [ ] 🔴 Implement `dispatch_fn`
   - [ ] Accept raw byte payload as computation unit
   - [ ] Execute synchronously on calling thread
