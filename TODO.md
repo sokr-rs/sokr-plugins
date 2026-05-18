@@ -55,11 +55,11 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
     - [x] `capability` handler — returns `Ok`
     - [x] `dispatch` handler — synchronous execution
     - [x] `completion` handler — immediate `Ok`
-- [ ] 🔴 Implement `capability_fn`
-  - [ ] Always return `SokrResult::Ok` — CPU accepts any computation
-  - [ ] Set `estimated_latency_ns = 0`
-  - [ ] Unit test: any query returns capable
-  - [ ] Unit test: null query pointer returns `InvalidInput`
+- [x] 🔴 Implement `capability_fn`
+  - [x] Always return `SokrResult::Ok` — CPU accepts any computation
+  - [x] Set `estimated_latency_ns = 0`
+  - [x] Unit test: any query returns capable
+  - [x] Unit test: null query pointer returns `InvalidInput`
 - [ ] 🔴 Implement `dispatch_fn`
   - [ ] Accept raw byte payload as computation unit
   - [ ] Execute synchronously on calling thread

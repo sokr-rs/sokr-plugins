@@ -9,13 +9,20 @@ use sokr::{
     SokrDispatchResponse, SokrResult, SokrSubstratePlugin, SokrVersion,
 };
 
-extern "C" fn capability(
+#[allow(clippy::not_unsafe_ptr_arg_deref)]
+pub extern "C" fn capability(
     _version: *const SokrVersion,
-    _query: *const SokrCapabilityQuery,
+    query: *const SokrCapabilityQuery,
     response: *mut SokrCapabilityResponse,
 ) -> SokrResult {
-    if !response.is_null() {
-        unsafe { (*response).result = SokrResult::Ok };
+    if query.is_null() || response.is_null() {
+        return SokrResult::InvalidInput;
+    }
+
+    unsafe {
+        (*response).result = SokrResult::Ok;
+        (*response).substrate_id = 0;
+        (*response).estimated_latency_ns = 0;
     }
     SokrResult::Ok
 }
