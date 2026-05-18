@@ -44,5 +44,6 @@ pub static CPU_PLUGIN: SokrSubstratePlugin = SokrSubstratePlugin {
     dispatch_fn: dispatch as SokrDispatchFn,
     completion_fn: completion as SokrCompletionFn,
     destroy_fn: destroy as SokrDestroyFn,
-    padding: [0; 16],
+    substrate_id: 0,
+    padding: [0; 8],
 };
