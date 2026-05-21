@@ -1,14 +1,126 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // CPU substrate plugin for SOKR — synchronous execution on calling thread.
+//
+// Implements the SOKR substrate plugin contract with minimal dependencies.
+// Matches sokr v0.2.0 FFI types for compatibility.
 
-#![no_std]
+use std::sync::atomic::{AtomicU64, Ordering};
 
-use core::sync::atomic::{AtomicU64, Ordering};
-use sokr::{
-    SokrCapabilityFn, SokrCapabilityQuery, SokrCapabilityResponse, SokrCompletionFn,
-    SokrCompletionQuery, SokrCompletionSignal, SokrCompletionToken, SokrDestroyFn, SokrDispatchFn,
-    SokrDispatchRequest, SokrDispatchResponse, SokrResult, SokrSubstratePlugin, SokrVersion,
-};
+// FFI type definitions matching SOKR substrate plugin contract.
+// Kept here for standalone publication without sokr dependency.
+
+#[repr(C)]
+pub struct SokrVersion {
+    pub major: u32,
+    pub minor: u32,
+    pub patch: u32,
+}
+
+impl SokrVersion {
+    pub const CURRENT: SokrVersion = SokrVersion {
+        major: 0,
+        minor: 2,
+        patch: 0,
+    };
+}
+
+#[repr(C)]
+pub struct SokrComputationId {
+    pub high: u64,
+    pub low: u64,
+}
+
+#[repr(C)]
+pub struct SokrCapabilityQuery {
+    pub computation_id: SokrComputationId,
+    pub ir_format: *const core::ffi::c_char,
+    pub ir_data_ptr: *const core::ffi::c_void,
+    pub ir_data_len: usize,
+    pub padding: [u8; 8],
+}
+
+#[repr(C)]
+pub struct SokrCapabilityResponse {
+    pub result: SokrResult,
+    pub padding: u32,
+    pub substrate_id: u32,
+    pub estimated_latency_ns: u64,
+}
+
+#[repr(C)]
+pub struct SokrDispatchRequest {
+    pub computation_id: SokrComputationId,
+    pub substrate_id: u32,
+    pub ir_data_ptr: *const core::ffi::c_void,
+    pub ir_data_len: usize,
+    pub params_ptr: *const core::ffi::c_void,
+    pub params_len: usize,
+    pub padding: [u8; 16],
+}
+
+#[repr(C)]
+pub struct SokrDispatchResponse {
+    pub result: SokrResult,
+    pub padding: u32,
+    pub completion_token: SokrCompletionToken,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub struct SokrCompletionToken {
+    pub handle: u64,
+}
+
+#[repr(C)]
+pub struct SokrCompletionQuery {
+    pub completion_token: SokrCompletionToken,
+    pub timeout_ns: u64,
+    pub padding: [u8; 8],
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum SokrCompletionSignal {
+    Pending = 0,
+    Complete = 1,
+    Failed = 2,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum SokrResult {
+    Ok = 0,
+    InvalidInput = 1,
+    NoCapableSubstrate = 2,
+}
+
+pub type SokrCapabilityFn = unsafe extern "C" fn(
+    version: *const SokrVersion,
+    query: *const SokrCapabilityQuery,
+    response: *mut SokrCapabilityResponse,
+) -> SokrResult;
+
+pub type SokrDispatchFn = unsafe extern "C" fn(
+    request: *const SokrDispatchRequest,
+    response: *mut SokrDispatchResponse,
+) -> SokrResult;
+
+pub type SokrCompletionFn = unsafe extern "C" fn(
+    query: *const SokrCompletionQuery,
+    signal: *mut SokrCompletionSignal,
+) -> SokrResult;
+
+pub type SokrDestroyFn = unsafe extern "C" fn();
+
+#[repr(C)]
+pub struct SokrSubstratePlugin {
+    pub version: SokrVersion,
+    pub capability_fn: SokrCapabilityFn,
+    pub dispatch_fn: SokrDispatchFn,
+    pub completion_fn: SokrCompletionFn,
+    pub destroy_fn: SokrDestroyFn,
+    pub padding: [u8; 16],
+}
 
 const MAX_SLOTS: usize = 1024;
 
@@ -133,6 +245,5 @@ pub static CPU_PLUGIN: SokrSubstratePlugin = SokrSubstratePlugin {
     dispatch_fn: dispatch as SokrDispatchFn,
     completion_fn: completion as SokrCompletionFn,
     destroy_fn: destroy as SokrDestroyFn,
-    substrate_id: 0,
-    padding: [0; 8],
+    padding: [0; 16],
 };
