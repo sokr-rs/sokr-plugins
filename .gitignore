@@ -47,3 +47,12 @@ dist/
 *.tmp
 *.bak
 *.orig
+
+# Agents and memory
+.claude/
+.harness-mem/
+agents/
+CLAUDE.md
+Plans.md
+hooks/
+out/
