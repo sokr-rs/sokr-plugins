@@ -1,5 +1,5 @@
-// src/lib.rs
-// CPU substrate plugin entry point.
+// SPDX-License-Identifier: MIT OR Apache-2.0
+// CPU substrate plugin for SOKR — synchronous execution on calling thread.
 
 #![no_std]
 

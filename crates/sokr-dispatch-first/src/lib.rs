@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 //! First-capable dispatch policy for SOKR.
 //!
 //! Iterates registered substrates in registration order.
