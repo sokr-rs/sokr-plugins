@@ -2,6 +2,11 @@
 name = "sokr-dispatch-first"
 version = "0.1.0"
 edition = "2021"
+description = "First-capable dispatch policy for SOKR substrate selection"
+license = "MIT OR Apache-2.0"
+authors = ["The SOKR Project"]
+repository = "https://github.com/sokr-rs/sokr-plugins"
+homepage = "https://github.com/sokr-rs/sokr-plugins"
 
 [lib]
 crate-type = ["rlib"]
