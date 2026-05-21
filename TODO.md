@@ -1,7 +1,7 @@
 # sokr-plugins — Development TODO
 
 > Reference Plugin Implementations for SOKR
-> Last Updated: 2026-04-20
+> Last Updated: 2026-05-21
 > Legend: 🔴 Critical path · 🟡 Important · 🟢 Nice-to-have
 
 ---
@@ -61,27 +61,27 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
   - [x] Functional test: any query returns capable (`cargo run --example test_capability`)
   - [x] Functional test: null query pointer returns `InvalidInput` (same)
   - [x] Integration test: `tests/sokr_cpu_capability.rs` (runnable with `cargo test` if sokr is made testable)
-- [ ] 🔴 Implement `dispatch_fn`
-  - [ ] Accept raw byte payload as computation unit
-  - [ ] Execute synchronously on calling thread
-  - [ ] Store result keyed by unique `completion_token`
-  - [ ] Unit test: dispatch stores result retrievable via completion
-  - [ ] Unit test: two dispatches get distinct tokens
-- [ ] 🔴 Implement `completion_fn`
-  - [ ] Return `Complete` immediately — synchronous dispatch
-  - [ ] Free result slot after `Complete`
-  - [ ] Unit test: returns `Complete` after dispatch
-  - [ ] Unit test: returns `Failed` for unknown token
-  - [ ] Unit test: double-poll after `Complete` returns `Failed`
-- [ ] 🔴 Implement `destroy_fn`
-  - [ ] Clean up all pending completion slots
-  - [ ] Unit test: destroy called, then plugin unusable
-- [ ] 🔴 Integration test — full round-trip
-  - [ ] Register with `sokr` core
-  - [ ] Capability → assert `Ok`
-  - [ ] Dispatch → assert `Ok` with valid token
-  - [ ] Completion → assert `Complete`
-  - [ ] Deregister → assert `Ok`
+- [x] 🔴 Implement `dispatch_fn`
+  - [x] Accept raw byte payload as computation unit
+  - [x] Execute synchronously on calling thread
+  - [x] Store result keyed by unique `completion_token`
+  - [x] Unit test: dispatch stores result retrievable via completion
+  - [x] Unit test: two dispatches get distinct tokens
+- [x] 🔴 Implement `completion_fn`
+  - [x] Return `Complete` immediately — synchronous dispatch
+  - [x] Free result slot after `Complete`
+  - [x] Unit test: returns `Complete` after dispatch
+  - [x] Unit test: returns `Failed` for unknown token
+  - [x] Unit test: double-poll after `Complete` returns `Failed`
+- [x] 🔴 Implement `destroy_fn`
+  - [x] Clean up all pending completion slots
+  - [x] Unit test: destroy called, then plugin unusable
+- [x] 🔴 Integration test — full round-trip
+  - [x] Register with `sokr` core
+  - [x] Capability → assert `Ok`
+  - [x] Dispatch → assert `Ok` with valid token
+  - [x] Completion → assert `Complete`
+  - [x] Deregister → assert `Ok`
 
 ### sokr-dispatch-first
 
