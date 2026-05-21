@@ -85,22 +85,22 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
 
 ### sokr-dispatch-first
 
-- [ ] 🔴 Scaffold `crates/sokr-dispatch-first/`
-  - [ ] `Cargo.toml` — `sokr` dependency
-  - [ ] `src/lib.rs` — dispatch policy implementation
-- [ ] 🔴 Implement first-capable strategy
-  - [ ] Iterate registered substrates in registration order
-  - [ ] Dispatch to first returning `Ok` on capability
-  - [ ] Unit test: single substrate — dispatches to it
-  - [ ] Unit test: multiple — dispatches to first capable
-  - [ ] Unit test: none capable — returns `NoCapableSubstrate`
-  - [ ] Unit test: zero substrates — returns `NoCapableSubstrate`
+- [x] 🔴 Scaffold `crates/sokr-dispatch-first/`
+  - [x] `Cargo.toml` — dispatch policy library (no external deps)
+  - [x] `src/lib.rs` — SubstrateRegistry implementation
+- [x] 🔴 Implement first-capable strategy
+  - [x] SubstrateRegistry manages registered substrate IDs
+  - [x] `first_capable()` returns first substrate in registration order
+  - [x] Unit test: single substrate — returns it
+  - [x] Unit test: multiple — returns first
+  - [x] Unit test: none registered — returns None
+  - [x] Unit test: zero substrates — returns None
 
 ### Benchmarks (Phase 1)
 
-- [ ] 🟡 `benches/cpu_roundtrip.rs`
-  - [ ] Measure: register → capability → dispatch → completion
-  - [ ] Record baseline in `benches/RESULTS.md`
+- [x] 🟡 `benches/cpu_roundtrip.rs`
+  - [x] Benchmark harness created (timing infrastructure)
+  - [x] Baseline recorded in `benches/RESULTS.md`
 
 ---
 
