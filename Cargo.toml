@@ -6,8 +6,7 @@ members = [
 resolver = "2"
 
 [workspace.dependencies]
-# Use local sokr for integration testing; publishes as crates.io version
-sokr = { path = "../sokr", version = "0.3" }
+sokr = "0.3"
 
 [workspace.lints.rust]
 unsafe_code = "deny"
