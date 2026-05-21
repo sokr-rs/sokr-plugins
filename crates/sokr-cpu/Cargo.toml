@@ -2,19 +2,11 @@
 name = "sokr-cpu"
 version = "0.1.0"
 edition = "2021"
-description = "Synchronous CPU substrate plugin reference implementation — standalone FFI library"
-license = "MIT OR Apache-2.0"
-authors = ["The SOKR Project"]
-repository = "https://github.com/sokr-rs/sokr-plugins"
-homepage = "https://github.com/sokr-rs/sokr-plugins"
 
 [lib]
 crate-type = ["rlib", "cdylib"]
 
 [dependencies]
+sokr = { workspace = true }
 
 [dev-dependencies]
-
-[[test]]
-name = "sokr_cpu_tests"
-path = "tests/sokr_cpu_tests.rs"

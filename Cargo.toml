@@ -6,8 +6,8 @@ members = [
 resolver = "2"
 
 [workspace.dependencies]
-# Pin to compatible sokr core version.
-sokr = "0.2"
+# Use local sokr for integration testing
+sokr = { path = "../sokr" }
 
 [workspace.lints.rust]
 unsafe_code = "deny"
