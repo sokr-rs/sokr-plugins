@@ -15,7 +15,3 @@ crate-type = ["rlib", "cdylib"]
 sokr = { workspace = true }
 
 [dev-dependencies]
-
-[[test]]
-name = "sokr_cpu_tests"
-path = "tests/sokr_cpu_tests.rs"
