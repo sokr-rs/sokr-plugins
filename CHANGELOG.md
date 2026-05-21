@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-05-22
+
+### Fixed
+
+#### sokr-cpu
+- Integrated sokr workspace dependency (path-based for development)
+- Simplified implementation using sokr types directly
+- Fixed capability response substrate_id field
+- Fixed dispatch/completion token handling
+
+#### sokr-dispatch-first
+- No changes (version bump for release sync)
+
 ## [0.1.0] - 2026-05-21
 
 ### Added
