@@ -12,7 +12,7 @@ Working reference implementations for every SOKR plugin category —
 substrate, IR, dispatch policy, language binding — proving the core
 contract works across GPU, CPU, QPU, neuromorphic, and photonic hardware.
 
-Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
+Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.3.0`
 
 ---
 
@@ -24,7 +24,7 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.2.0`
 - [x] 🔴 Initialise Cargo workspace
   - [x] Root `Cargo.toml` with `[workspace]` members
   - [x] `resolver = "2"`
-  - [x] `[workspace.dependencies]` — pin `sokr = "0.2"` when available
+  - [x] `[workspace.dependencies]` — pin `sokr = "0.3"` (current compatible version)
   - [x] `[workspace.lints]` — shared lint config
   - [x] `[profile.dev] panic = "abort"`
   - [x] `[profile.release] panic = "abort"`

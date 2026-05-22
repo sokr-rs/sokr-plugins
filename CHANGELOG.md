@@ -54,5 +54,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Repository
 
 - **Homepage**: [sokr-rs/sokr-plugins](https://github.com/sokr-rs/sokr-plugins)
-- **Depends on**: sokr-rs/sokr v0.2.0+
+- **Depends on**: sokr-rs/sokr v0.3.0+
 - **License**: MIT OR Apache-2.0

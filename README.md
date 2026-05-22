@@ -54,11 +54,28 @@ Third-party plugins can live anywhere — no need to be in this repo.
 
 ## Workspace Contents
 
-### Substrate Plugins
+### Available Plugins (Shipped & Tested)
 
-| Crate | Target | Status |
+#### Substrate
+
+| Crate | Target | Integration Test |
 |---|---|---|
-| `sokr-cpu` | CPU — fallback, always available | Phase 1 |
+| `sokr-cpu` | CPU — universal fallback, synchronous | [`crates/sokr-cpu/tests/plugin_contract.rs`](crates/sokr-cpu/tests/plugin_contract.rs) |
+
+#### Dispatch Policy
+
+| Crate | Strategy | Shipped Version |
+|---|---|---|
+| `sokr-dispatch-first` | First capable substrate wins | v0.1.2 |
+
+---
+
+### Planned Plugins (Future Phases)
+
+#### Substrate Plugins — Phase 2+
+
+| Crate | Target | Phase |
+|---|---|---|
 | `sokr-vulkan` | Vulkan-compatible GPUs (NVIDIA, AMD, Intel) | Phase 2 |
 | `sokr-cuda` | NVIDIA CUDA | Phase 3 |
 | `sokr-metal` | Apple Metal | Phase 3 |
@@ -67,26 +84,25 @@ Third-party plugins can live anywhere — no need to be in this repo.
 | `sokr-neuro` | Neuromorphic (Intel Loihi via LAVA) | Future |
 | `sokr-photon` | Photonic compute (Lightmatter) | Future |
 
-### IR Plugins
+#### IR Plugins — Phase 2+
 
-| Crate | IR Format | Status |
+| Crate | IR Format | Phase |
 |---|---|---|
 | `sokr-spirv` | SPIR-V | Phase 2 |
 | `sokr-ptx` | PTX (NVIDIA) | Phase 3 |
 | `sokr-openqasm` | OpenQASM 3 | Future |
 | `sokr-ir` | SOKR-native substrate-agnostic IR | Future |
 
-### Dispatch Policy Plugins
+#### Dispatch Policies — Phase 3+
 
-| Crate | Strategy | Status |
+| Crate | Strategy | Phase |
 |---|---|---|
-| `sokr-dispatch-first` | First capable substrate wins | Phase 1 |
 | `sokr-dispatch-perf` | Performance-profile-aware routing | Phase 3 |
 | `sokr-dispatch-cost` | Cost-aware routing (cloud context) | Future |
 
-### Language Bindings
+#### Language Bindings — Phase 3
 
-| Crate | Language | Status |
+| Crate | Language | Phase |
 |---|---|---|
 | `sokr-python` | Python (PyO3) | Phase 3 |
 | `sokr-wasm` | JavaScript / Browser (wasm-bindgen) | Phase 3 |
@@ -97,25 +113,27 @@ Third-party plugins can live anywhere — no need to be in this repo.
 
 ```
 sokr-plugins/
-├── crates/
-│   ├── sokr-cpu/              ← Phase 1
-│   ├── sokr-dispatch-first/   ← Phase 1
-│   ├── sokr-spirv/            ← Phase 2
-│   ├── sokr-vulkan/           ← Phase 2
-│   ├── sokr-cuda/             ← Phase 3
-│   ├── sokr-metal/            ← Phase 3
-│   ├── sokr-python/           ← Phase 3
-│   ├── sokr-webgpu/           ← Phase 3
-│   ├── sokr-dispatch-perf/    ← Phase 3
-│   ├── sokr-qpu/              ← Future
-│   ├── sokr-neuro/            ← Future
-│   ├── sokr-photon/           ← Future
-│   ├── sokr-ir/               ← Future
-│   ├── sokr-ptx/              ← Future
-│   └── sokr-openqasm/         ← Future
+├── crates/                                  (workspace members)
+│   ├── sokr-cpu/                   ✓ shipped (v0.1.2)
+│   ├── sokr-dispatch-first/        ✓ shipped (v0.1.2)
+│   │
+│   ├── sokr-spirv/                 Phase 2
+│   ├── sokr-vulkan/                Phase 2
+│   ├── sokr-cuda/                  Phase 3
+│   ├── sokr-metal/                 Phase 3
+│   ├── sokr-python/                Phase 3
+│   ├── sokr-webgpu/                Phase 3
+│   ├── sokr-dispatch-perf/         Phase 3
+│   ├── sokr-qpu/                   Future
+│   ├── sokr-neuro/                 Future
+│   ├── sokr-photon/                Future
+│   ├── sokr-ir/                    Future
+│   ├── sokr-ptx/                   Future
+│   └── sokr-openqasm/              Future
+├── tests/                           (integration tests for sokr core)
 ├── examples/
 ├── benches/
-└── Cargo.toml                 ← workspace root
+└── Cargo.toml                       (workspace root, sokr = "0.3")
 ```
 
 ---
