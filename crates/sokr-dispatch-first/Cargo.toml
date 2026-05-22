@@ -1,6 +1,6 @@
 [package]
 name = "sokr-dispatch-first"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "First-capable dispatch policy for SOKR substrate selection"
 license = "MIT OR Apache-2.0"
