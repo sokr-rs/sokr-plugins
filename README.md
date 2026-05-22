@@ -27,7 +27,7 @@ is a valid SOKR plugin. No registration, no permission, no ceremony.
 
 ```toml
 [dependencies]
-sokr = "0.2"
+sokr = "0.3"
 ```
 
 ```rust

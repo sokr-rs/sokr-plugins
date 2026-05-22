@@ -149,7 +149,7 @@ All crates share workspace-level configuration:
 
 ```toml
 [workspace.dependencies]
-sokr = "0.2"           # pinned to compatible core version
+sokr = "0.3"           # pinned to compatible core version
 
 [workspace.lints.rust]
 unsafe_code = "deny"   # each plugin controls its own unsafe boundary
@@ -173,7 +173,7 @@ Each plugin crate has its own `Cargo.toml` with:
 All plugins in this workspace track `sokr` core compatibility:
 
 ```
-sokr-plugins v0.x  →  sokr v0.2.x (Phase 1 core)
+sokr-plugins v0.x  →  sokr v0.3.x (Phase 1 core)
 sokr-plugins v1.x  →  sokr v1.x   (stable core ABI)
 ```
 

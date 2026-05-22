@@ -30,7 +30,9 @@ pub extern "C" fn capability(
     SokrResult::Ok
 }
 
-extern "C" fn dispatch(
+#[allow(clippy::not_unsafe_ptr_arg_deref)]
+#[no_mangle]
+pub extern "C" fn dispatch(
     _request: *const SokrDispatchRequest,
     response: *mut SokrDispatchResponse,
 ) -> SokrResult {
@@ -46,7 +48,9 @@ extern "C" fn dispatch(
     SokrResult::Ok
 }
 
-extern "C" fn completion(
+#[allow(clippy::not_unsafe_ptr_arg_deref)]
+#[no_mangle]
+pub extern "C" fn completion(
     query: *const SokrCompletionQuery,
     signal: *mut SokrCompletionSignal,
 ) -> SokrResult {
@@ -66,7 +70,8 @@ extern "C" fn completion(
     }
 }
 
-extern "C" fn destroy() {}
+#[no_mangle]
+pub extern "C" fn destroy() {}
 
 // Static plugin descriptor required by the SOKR core.
 #[no_mangle]
