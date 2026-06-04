@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! First-capable dispatch policy for SOKR.
 //!
-//! Iterates registered substrates in registration order.
-//! Dispatches to the first one returning Ok on capability.
-//! Falls back to NoCapableSubstrate if none capable.
+//! Maintains substrates in registration order. `first_capable()` returns the
+//! first registered substrate, or `None` when none are registered.
+//!
+//! NOTE: capability filtering is not yet wired in — the registry does not query
+//! each substrate's `capability_fn`, so the returned substrate is the first
+//! *registered*, not a verified *capable* one. Real capability-based selection
+//! (and a `NoCapableSubstrate` fallback) is deferred to a later phase.
 
 use std::sync::Mutex;
 

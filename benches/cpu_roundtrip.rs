@@ -25,9 +25,10 @@ fn main() {
     }
 
     // Statistics
-    times.sort_unstable();
-    let min = times.iter().min().copied().unwrap_or(0.0);
-    let max = times.iter().max().copied().unwrap_or(0.0);
+    // f64 is not Ord, so sort via partial_cmp; after sorting, first/last are min/max.
+    times.sort_by(|a, b| a.partial_cmp(b).unwrap());
+    let min = times.first().copied().unwrap_or(0.0);
+    let max = times.last().copied().unwrap_or(0.0);
     let mean = times.iter().sum::<f64>() / times.len() as f64;
     let median = times[times.len() / 2];
 

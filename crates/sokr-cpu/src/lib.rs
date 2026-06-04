@@ -11,6 +11,7 @@ use sokr::{
 };
 
 #[allow(clippy::not_unsafe_ptr_arg_deref)]
+#[no_mangle]
 pub extern "C" fn capability(
     _version: *const SokrVersion,
     query: *const SokrCapabilityQuery,
@@ -65,7 +66,10 @@ pub extern "C" fn completion(
             *signal = SokrCompletionSignal::Complete;
             return SokrResult::Ok;
         }
-        // Token not recognized by this plugin
+        // Token not recognized by this plugin. Write a defined signal rather than
+        // leaving the caller's out-param untouched (the fn contract guarantees a
+        // valid, non-null `signal` pointer for the call).
+        *signal = SokrCompletionSignal::Failed;
         SokrResult::NotFound
     }
 }
