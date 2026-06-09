@@ -1,15 +1,29 @@
 # sokr-cpu
 
-**Synchronous CPU substrate plugin for SOKR** — reference implementation proving the core contract works on general-purpose processors.
+**Synchronous CPU substrate plugin for SOKR** — the reference implementation
+that proves the core `capability → dispatch → completion` contract closes end to
+end on a general-purpose processor. No GPU or accelerator required.
 
 ## Features
 
-- ✅ Always capable — CPU accepts any computation
-- ✅ Synchronous execution — dispatch blocks until complete
-- ✅ Zero dependencies — pure Rust, just `std`
-- ✅ FFI-safe — compatible with SOKR v0.2.0+ core contract
-- ✅ Multi-slot dispatch — up to 1024 concurrent completion tokens
-- ✅ Immediate completion — no async overhead
+- ✅ **Disclaim-correct capability** — claims only the `sokr-noop` IR and
+  disclaims everything else with `CapabilityDenied`. It does not lie about
+  what it can do.
+- ✅ **Synchronous execution** — `dispatch_fn` runs the (no-op) computation
+  inline; the result is ready before it returns.
+- ✅ **Real completion table** — issues a unique non-zero token per dispatch,
+  consumes it on the first terminal poll, and clears all tokens on destroy.
+- ✅ **FFI-safe** — implements the `sokr` 0.3 `SokrSubstratePlugin` C ABI
+  exactly (`repr(C)`, `padding: [u8; 8]`, `SokrVersion::CURRENT`).
+- ✅ **Lightweight** — depends only on `sokr`; uses only `core`-level types
+  internally.
+
+## What it computes
+
+This is a proof-of-contract substrate, not a compute kernel. It accepts exactly
+one IR format — `ir_format == "sokr-noop"` — whose "execution" is a no-op that
+produces a completed token. Every other IR is disclaimed so the core's
+capability scan can fall through to a real substrate.
 
 ## Usage
 
@@ -17,37 +31,52 @@ Add to `Cargo.toml`:
 
 ```toml
 [dependencies]
-sokr-cpu = "0.1"
+sokr-cpu = "0.2"
 ```
 
-Link the plugin with SOKR core:
+Register the substrate with the core and route a computation through it. The
+core assigns the `substrate_id` you must use for dispatch (the plugin cannot
+know its own id — see [ARCHITECTURE.md](ARCHITECTURE.md)):
 
 ```rust
-extern "C" {
-    static CPU_PLUGIN: SokrSubstratePlugin;
-}
+use sokr::ffi::sokr_register_substrate;
+use sokr_cpu::CPU_PLUGIN;
 
-// Register with sokr core at startup
-sokr_core::register(&CPU_PLUGIN)?;
+let mut substrate_id = 0u64;
+// SAFETY: both pointers are valid and non-null.
+let result = unsafe { sokr_register_substrate(&CPU_PLUGIN, &mut substrate_id) };
+assert!(result.is_ok());
+// Dispatch with request.substrate_id = substrate_id ...
 ```
 
-## Architecture
+See [`examples/cpu_end_to_end.rs`](examples/cpu_end_to_end.rs) for the complete
+`register → capability → dispatch → completion → deregister` cycle:
 
-The CPU plugin implements the SOKR substrate contract:
+```sh
+cargo run --example cpu_end_to_end
+```
 
-- **`capability_fn`**: Always returns `Ok` with `substrate_id=0`, `estimated_latency_ns=0`
-- **`dispatch_fn`**: Stores computation request, returns unique `completion_token` (always handle=42 for synchronous model)
-- **`completion_fn`**: Immediately returns `Complete` — CPU computation is synchronous
-- **`destroy_fn`**: Clears all pending completion slots
+## Completion model
 
-## Completion Model
+The ABI is asynchronous (dispatch issues a token, completion polls it), but CPU
+work here is synchronous: when `dispatch_fn` returns, the computation has
+already run and its token is `Complete`. `completion_fn` reports that status and
+**consumes** the token, so a token is valid for exactly one terminal poll;
+re-polling a consumed token is disclaimed (`NotFound`). `destroy_fn` invalidates
+every outstanding token.
 
-CPU plugin executes synchronously on the calling thread. When `dispatch_fn` returns, the computation has already executed. The `completion_fn` always returns `Complete` immediately.
+## ⚠️ Single-threaded
+
+The completion table lives in a module `static` because the SOKR vtable carries
+no per-plugin context. This is sound only under the core's pre-1.0
+single-threaded invariant. Do not call the plugin from multiple threads
+concurrently. See [ARCHITECTURE.md](ARCHITECTURE.md) for the upstream
+`context: *mut c_void` proposal that would remove the static.
 
 ## Version
 
-- **sokr-cpu**: v0.1.1
-- **Depends on**: sokr ≥ 0.3.0
+- **sokr-cpu**: v0.2.0
+- **Depends on**: `sokr` 0.3 (advertises `SokrVersion::CURRENT`)
 
 ## License
 
@@ -60,5 +89,6 @@ at your option.
 
 ## See Also
 
+- [ARCHITECTURE.md](ARCHITECTURE.md) — execution model, disclaim semantics, ABI seams
 - [sokr-rs/sokr](https://github.com/sokr-rs/sokr) — SOKR compute abstraction core
 - [sokr-dispatch-first](../sokr-dispatch-first) — First-capable dispatch policy

@@ -24,13 +24,15 @@ The core has zero knowledge of this repo. Plugins depend on `sokr`.
 Every plugin in this repo implements `SokrSubstratePlugin`:
 
 ```rust
+#[repr(C)]
 pub struct SokrSubstratePlugin {
     pub version:        SokrVersion,
     pub capability_fn:  SokrCapabilityFn,
     pub dispatch_fn:    SokrDispatchFn,
     pub completion_fn:  SokrCompletionFn,
     pub destroy_fn:     SokrDestroyFn,
-    pub padding:        [u8; 16],
+    pub substrate_id:   u64,        // assigned by the core on registration
+    pub padding:        [u8; 8],
 }
 ```
 
