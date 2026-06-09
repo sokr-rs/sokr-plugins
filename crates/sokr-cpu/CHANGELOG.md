@@ -36,6 +36,13 @@ implementation and proves the SOKR loop end to end.
 - Behavioral integration tests in `tests/plugin_contract.rs` that drive the
   plugin through `sokr` core (lifecycle, multi-dispatch, destroy invalidation,
   capability disclaim), replacing the previous `size_of`-only assertions.
+- `no_std` support: `#![cfg_attr(not(feature = "std"), no_std)]` with a
+  default-on `std` feature. The bare plugin builds with
+  `cargo build -p sokr-cpu --no-default-features` (enforced by a CI job); the
+  std-based tests, example, and benchmark keep the default feature.
+- `benches/cpu_roundtrip.rs` (declared `[[bench]]`, `harness = false`) — a real
+  benchmark of the `dispatch → completion` roundtrip through `sokr` core,
+  replacing a repo-root orphan that measured nothing.
 - `ARCHITECTURE.md` and `TODO.md` for the crate.
 
 ### Fixed
@@ -46,6 +53,9 @@ implementation and proves the SOKR loop end to end.
 - `examples/test_capability.rs`, which redefined private copies of the ABI
   types and tested a local function rather than the plugin. Superseded by
   `examples/cpu_end_to_end.rs`.
+- The repo-root `benches/` orphan (`cpu_roundtrip.rs` + stale `RESULTS.md`),
+  which was declared by no crate and measured nothing. Replaced by the crate's
+  declared benchmark.
 
 ## [0.1.2] - 2026-05-22
 

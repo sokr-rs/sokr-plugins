@@ -1,3 +1,5 @@
+#![cfg_attr(not(feature = "std"), no_std)]
+
 //! # sokr-cpu — synchronous CPU substrate plugin
 //!
 //! Reference implementation of the [`SokrSubstratePlugin`] contract for

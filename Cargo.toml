@@ -6,7 +6,9 @@ members = [
 resolver = "2"
 
 [workspace.dependencies]
-sokr = "0.3"
+# default-features off so plugins can opt into a no_std `sokr`; std-using
+# crates re-enable it through their own `std` feature (`sokr/std`).
+sokr = { version = "0.3", default-features = false }
 
 [workspace.lints.rust]
 unsafe_code = "deny"

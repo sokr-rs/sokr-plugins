@@ -15,8 +15,9 @@ end on a general-purpose processor. No GPU or accelerator required.
   consumes it on the first terminal poll, and clears all tokens on destroy.
 - ✅ **FFI-safe** — implements the `sokr` 0.3 `SokrSubstratePlugin` C ABI
   exactly (`repr(C)`, `padding: [u8; 8]`, `SokrVersion::CURRENT`).
-- ✅ **Lightweight** — depends only on `sokr`; uses only `core`-level types
-  internally.
+- ✅ **`no_std`** — the plugin uses only `core`-level types; build the bare
+  no_std library with `cargo build -p sokr-cpu --no-default-features`. The
+  default `std` feature is for the tests, example, and benchmark.
 
 ## What it computes
 
@@ -54,6 +55,12 @@ See [`examples/cpu_end_to_end.rs`](examples/cpu_end_to_end.rs) for the complete
 
 ```sh
 cargo run --example cpu_end_to_end
+```
+
+Benchmark the synchronous `dispatch → completion` roundtrip:
+
+```sh
+cargo bench -p sokr-cpu
 ```
 
 ## Completion model

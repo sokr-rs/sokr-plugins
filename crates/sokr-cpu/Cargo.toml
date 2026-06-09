@@ -11,5 +11,16 @@ homepage = "https://github.com/sokr-rs/sokr-plugins"
 [lib]
 crate-type = ["rlib", "cdylib"]
 
+[features]
+default = ["std"]
+# `std` is opt-out: the plugin itself uses only `core`, but it is enabled by
+# default so the std-based tests, example, and benchmark build normally.
+# Build the bare no_std plugin with `--no-default-features`.
+std = ["sokr/std"]
+
 [dependencies]
 sokr = { workspace = true }
+
+[[bench]]
+name = "cpu_roundtrip"
+harness = false
