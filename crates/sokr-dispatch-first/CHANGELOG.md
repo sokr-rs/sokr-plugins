@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-05-22
+
+### Changed
+- Version bump for the coordinated Phase 1 release. No functional changes to
+  this crate: `sokr-dispatch-first` is standalone and does not depend on `sokr`,
+  so the sokr 0.3.0 compatibility work in that release cycle did not affect it.
+
 ## [0.1.1] - 2026-05-22
 
 ### Changed
