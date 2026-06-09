@@ -98,9 +98,10 @@ Depends on: [sokr-rs/sokr](https://github.com/sokr-rs/sokr) `v0.3.0`
 
 ### Benchmarks (Phase 1)
 
-- [x] 🟡 `benches/cpu_roundtrip.rs`
-  - [x] Benchmark harness created (timing infrastructure)
-  - [x] Baseline recorded in `benches/RESULTS.md`
+- [x] 🟡 `crates/sokr-cpu/benches/cpu_roundtrip.rs` (declared `[[bench]]`,
+  `harness = false`)
+  - [x] Drives the real `dispatch → completion` roundtrip through sokr core
+  - [x] Run with `cargo bench -p sokr-cpu` (replaced the repo-root orphan)
 
 ---
 

@@ -35,20 +35,24 @@
 
 ## Backlog
 
-- **Benchmark** (`benches/cpu_roundtrip.rs`): still an orphan target (not
-  declared in any Cargo.toml) and `measure_roundtrip()` measures nothing.
-  Declare it as a real target driving the live dispatch path, or delete it.
 - Propose an additive `context: *mut c_void` vtable field to sokr core so the
   plugin can drop the static completion table and learn its own `substrate_id`
-  (see `crates/sokr-cpu/ARCHITECTURE.md` §5). Upstream change.
-- `no_std` support for `sokr-cpu` (`--no-default-features`); blocker is the
-  std-based integration tests (see `crates/sokr-cpu/TODO.md`).
+  (see `crates/sokr-cpu/ARCHITECTURE.md` §5). Upstream change on `sokr-rs/sokr`.
 
 See TODO.md for Phase 2+ (GPU, CUDA, Metal, etc.).
 
 ## Archive
 
-(Completed tasks moved here as sprints finish.)
+### sokr-cpu Phase 1 — v0.2.0 (2026-06-09)
+
+Tasks 1.1–1.4 complete (see the Active Sprint table and Resolution above). The
+two former Backlog items both shipped in v0.2.0:
+
+- **Benchmark** — `crates/sokr-cpu/benches/cpu_roundtrip.rs` is now a declared
+  `[[bench]]` (`harness = false`) driving the real `dispatch → completion` path
+  through sokr core (median ~60 ns). The repo-root `benches/` orphan was removed.
+- **`no_std`** — `sokr-cpu` builds with `--no-default-features` (CI-enforced);
+  the std-based tests/example/benchmark keep the default `std` feature.
 
 ---
 
